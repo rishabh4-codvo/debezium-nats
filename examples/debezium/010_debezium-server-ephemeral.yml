@@ -1,0 +1,32 @@
+apiVersion: debezium.io/v1alpha1
+kind: DebeziumServer
+metadata:
+  name: my-debezium
+spec:
+  image: quay.io/debezium/server:2.3 # feel free to use 2.3 tag to use the latest CR
+  storage: # This section is required in order to have a persistent storage (will be mounted at /debezium/data)
+    type: persistent
+    claimName: my-pvc # At least for now you  have to create you PVC manually
+  quarkus:
+    config:
+      log.console.json: false
+      kubernetes-config.enabled: true
+      kubernetes-config.secrets: postgresql-credentials
+  sink:
+    type: nats-jetstream
+    config:
+      url: nats://nats:4222
+      create-stream: true
+      subjects: postgres.*.*
+  source:
+    class: io.debezium.connector.postgresql.PostgresConnector
+    config:
+      offset.storage.file.filename: /debezium/data/offsets.dat
+      offset.flush.interval.ms: 0
+      database.hostname: postgres
+      database.port: 5432
+      database.user: postgres
+      database.password: postgres
+      database.dbname: postgres
+      topic.prefix: postgres
+      table.include.list: postgres.users
