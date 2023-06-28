@@ -15,7 +15,7 @@ spec:
   sink:
     type: nats-jetstream
     config:
-      url: nats://nats:4222
+      url: nats://nats.nats.svc.cluster.local:4222 # nats://<nats-service-name>.<nats-namespace>.svc.cluster.local:4222
       create-stream: true
       subjects: postgres.*.*
   source:
@@ -23,10 +23,16 @@ spec:
     config:
       offset.storage.file.filename: /debezium/data/offsets.dat
       offset.flush.interval.ms: 0
-      database.hostname: postgres
+      # In the Debezium server configuration, 
+      # confirm that the database.hostname field is set to the fully qualified domain name (FQDN) 
+      #of the PostgreSQL service in the PostgreSQL namespace. 
+      #The FQDN format is <postgres-service-name>.<postgres-namespace>.svc.cluster.local
+      database.hostname: postgres.postgres.svc.cluster.local
       database.port: 5432
       database.user: postgres
       database.password: postgres
       database.dbname: postgres
       topic.prefix: postgres
-      table.include.list: postgres.users
+      schema.include.list: public
+      table.include.list: public.users
+     # column.include.list: public.users.name
