@@ -64,7 +64,7 @@ To verify that CDC logs are being generated and processed correctly, you can fol
     Replace <nats-subject> with the actual NATS subject or topic where Debezium publishes the CDC events.  
 
     **Ensure that the subject or topic that you add must match with the subject that you have provided in the debezium-server.yml configs.** 
-    
+
     If you receive the change events in the NATS subscriber, it indicates that the CDC logs are successfully processed and forwarded to NATS.
 
 ## Uninstallation
@@ -105,43 +105,43 @@ If you encounter any issues while using the hist-cdc application, try the follow
     Resolution: Double-check the database connection details in the configuration file (debezium-server). Ensure that the hostname, port, username, password, and database name are correct. Verify that the database server is accessible and reachable from the application's network.
 
 * **Issue**: Connection to the database is failing.
-    
-**Resolution**: If you are experiencing connection issues between Debezium and the database, follow these steps:
 
-    1. Check the database connection details in the Debezium configuration file (under `debezium-server.yml`). Ensure that the hostname, port, username, password, and database name are correct.
+  **Resolution**: If you are experiencing connection issues between Debezium and the database, follow these steps:
 
-    2. Verify that the database server allows connections from the Debezium container or pod. Depending on your setup, you may need to update the firewall rules or network configurations to allow the required communication.
+      1. Check the database connection details in the Debezium configuration file (under `debezium-server.yml`). Ensure that the hostname, port, username, password, and database name are correct.
 
-    3. Confirm that the database user specified in the Debezium configuration has the necessary privileges and permissions to access the specified database. Check that the user has appropriate read permissions for the tables and schemas you want to capture changes from.
+      2. Verify that the database server allows connections from the Debezium container or pod. Depending on your setup, you may need to update the firewall rules or network configurations to allow the required communication.
 
-    4. Ensure that the database server is accessible and reachable from the network where Debezium is deployed. You can try to connect to the database using a database client tool or utility from the same network to verify connectivity.
+      3. Confirm that the database user specified in the Debezium configuration has the necessary privileges and permissions to access the specified database. Check that the user has appropriate read permissions for the tables and schemas you want to capture changes from.
 
-    5. Check the logs of the Debezium connector for any error messages or warnings related to the database connection. You can retrieve the logs using the following command:
+      4. Ensure that the database server is accessible and reachable from the network where Debezium is deployed. You can try to connect to the database using a database client tool or utility from the same network to verify connectivity.
 
-        ```shell
-        kubectl logs <debezium-connector-pod> -n debezium
-        ```
+      5. Check the logs of the Debezium connector for any error messages or warnings related to the database connection. You can retrieve the logs using the following command:
 
-        Look for any specific error messages or stack traces that indicate the cause of the connection failure. Pay attention to any authentication errors, network connectivity issues, or permission-related problems.
+          ```shell
+          kubectl logs <debezium-connector-pod> -n debezium
+          ```
+
+          Look for any specific error messages or stack traces that indicate the cause of the connection failure. Pay attention to any authentication errors, network connectivity issues, or permission-related problems.
 
 * **Issue**: Connection to the NATS messaging system is failing.
     
-**Resolution**: If you are experiencing connection issues between Debezium and NATS, follow these steps:
+  **Resolution**: If you are experiencing connection issues between Debezium and NATS, follow these steps:
 
-    1. Check the NATS connection details in the Debezium configuration file (under `debezium-server.yml`). Ensure that the NATS server URL, including the hostname and port, is correct.
+      1. Check the NATS connection details in the Debezium configuration file (under `debezium-server.yml`). Ensure that the NATS server URL, including the hostname and port, is correct.
 
-    2. Verify that the NATS messaging system is running and accessible from the network where Debezium is deployed. You can try connecting to the NATS server using a NATS client tool or utility to ensure connectivity.
+      2. Verify that the NATS messaging system is running and accessible from the network where Debezium is deployed. You can try connecting to the NATS server using a NATS client tool or utility to ensure connectivity.
 
-    3. Confirm that the necessary details, such as url, create-stream and subjects, are correctly specified in the Debezium configuration file.
+      3. Confirm that the necessary details, such as url, create-stream and subjects, are correctly specified in the Debezium configuration file.
 
-    4. Check the network connectivity between the Debezium container or pod and the NATS messaging system. Ensure that there are no network restrictions, such as firewalls or security groups, blocking the communication.
+      4. Check the network connectivity between the Debezium container or pod and the NATS messaging system. Ensure that there are no network restrictions, such as firewalls or security groups, blocking the communication.
 
-    5. Validate that the Debezium connector is using the correct NATS subject or topic to publish the captured change events. Verify that the Debezium connector configuration and the consuming components (e.g., subscribers) are aligned with the same subject or topic.
+      5. Validate that the Debezium connector is using the correct NATS subject or topic to publish the captured change events. Verify that the Debezium connector configuration and the consuming components (e.g., subscribers) are aligned with the same subject or topic.
 
-    6. Review the logs of the Debezium connector for any error messages or warnings related to the NATS connection. Retrieve the logs using the following command:
+      6. Review the logs of the Debezium connector for any error messages or warnings related to the NATS connection. Retrieve the logs using the following command:
 
-        ```shell
-        kubectl logs <debezium-connector-pod> -n debezium
-        ```
+          ```shell
+          kubectl logs <debezium-connector-pod> -n debezium
+          ```
 
-        Look for any specific error messages or stack traces that indicate the cause of the connection failure. Pay attention to any authentication errors, network connectivity issues, or permission-related problems.
+          Look for any specific error messages or stack traces that indicate the cause of the connection failure. Pay attention to any authentication errors, network connectivity issues, or permission-related problems.
