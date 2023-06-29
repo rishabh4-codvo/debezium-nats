@@ -50,6 +50,23 @@ If all the commands return the expected output and the resources are in the desi
 
 If any of the commands display errors or the resources are not in the expected state, review the output for any error messages, check the logs of the affected pods, and consult the troubleshooting section of the documentation for further assistance.
 
+## Test for Change Data Capture (CDC) logs using NATS:
+
+To verify that CDC logs are being generated and processed correctly, you can follow these steps:
+
+1. Subscribe to the NATS subject or topic where Debezium publishes the CDC events.
+
+2. Use a NATS client tool or utility to subscribe to the subject and verify that the captured change events are being received by NATS.
+
+3. Example NATS subscription command:
+    ```nats-sub <nats-subject>```
+    
+    Replace <nats-subject> with the actual NATS subject or topic where Debezium publishes the CDC events.  
+
+    **Ensure that the subject or topic that you add must match with the subject that you have provided in the debezium-server.yml configs.** 
+    
+    If you receive the change events in the NATS subscriber, it indicates that the CDC logs are successfully processed and forwarded to NATS.
+
 ## Uninstallation
 
 To uninstall the hist-cdc application and its associated resources, follow these steps:
